@@ -3,6 +3,11 @@ pragma solidity ^0.8.13;
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 interface IFeeCurrency is IERC20 {
+    /*
+       Note: Events which are raised in these functions will show up for every
+       transaction using this token as a fee currency.
+    */
+
     // Called before transaction execution to reserve the maximum amount of gas
     // that can be used by the transaction.
     // The implementation must reduce `from`'s balance by `value`.
