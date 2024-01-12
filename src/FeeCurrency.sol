@@ -1,8 +1,9 @@
 pragma solidity ^0.8.13;
 
 import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import {IFeeCurrency} from "./IFeeCurrency.sol";
 
-contract FeeCurrency is ERC20 {
+contract FeeCurrency is ERC20, IFeeCurrency {
     constructor(uint256 initialSupply) ERC20("ExampleFeeCurrency", "EFC") {
         _mint(msg.sender, initialSupply);
     }
