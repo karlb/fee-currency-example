@@ -14,6 +14,10 @@ contract FeeCurrencyTest is Test {
         fc.transfer(user, 100);
     }
 
+    /**
+     * Happy cases
+     */
+
     function test_debit() public {
         vm.prank(address(0));
         fc.debitGasFees(user, 100);
@@ -53,6 +57,10 @@ contract FeeCurrencyTest is Test {
         assertEq(fc.totalSupply(), 300);
     }
 
+    /**
+     * Error cases
+     */
+
     function test_onlyVm() public {
         vm.expectRevert(bytes("Only VM can call"));
         fc.debitGasFees(user, 100);
@@ -64,5 +72,15 @@ contract FeeCurrencyTest is Test {
 
         vm.expectRevert(bytes("Only VM can call"));
         fc.creditGasFees(user, tipRecipient, address(0), baseFeeRecipient, 20, 10, 0, 70);
+    }
+
+    function test_creditArrayLengthDifference() public {
+        address[] memory recipients = new address[](0);
+        uint256[] memory amounts = new uint256[](1);
+
+        amounts[0] = 20;
+        vm.prank(address(0));
+        vm.expectRevert(bytes("Recipients and amounts must be the same length."));
+        fc.creditGasFees(recipients, amounts);
     }
 }

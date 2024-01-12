@@ -14,6 +14,7 @@ interface IFeeCurrency is IERC20 {
     // might be added, like an L1 gas fee when Celo becomes and L2.
     // The implementation must increase each `recipient`'s balance by respective `value`.
     // Must revert if `msg.sender` is not the zero address.
+    // Must revert if `recipients` and `amounts` have different lengths.
     function creditGasFees(address[] calldata recipients, uint256[] calldata amounts) external;
 
     // Old function signature for backwards compatibility
