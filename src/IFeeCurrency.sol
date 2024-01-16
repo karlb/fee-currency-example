@@ -45,7 +45,7 @@ interface IFeeCurrency is IERC20 {
     /// @notice New function signature, will be used when all fee currencies have migrated.
     /// Credited amounts include gas refund, base fee and tip. Future additions
     /// may include L1 gas fee when Celo becomes and L2.
-    /// - The implementation must increase each `recipient`'s balance by corresponding `value`.
+    /// - The implementation must increase each `recipient`'s balance by corresponding `amount`.
     /// - Must revert if `msg.sender` is not the zero address.
     /// - Must revert if `recipients` and `amounts` have different lengths.
     function creditGasFees(address[] calldata recipients, uint256[] calldata amounts) external;
