@@ -21,10 +21,9 @@ interface IFeeCurrency is IERC20 {
        - The functions will be called by the blockchain client with `msg.sender
          == address(0)`. If this condition is not met, the functions must
          revert to prevent malicious users from crediting their accounts directly.
-       - `creditGasFees` must credit all specified amounts. If it is impossible to
-         credit one of the recipients for some reason, add the amount to the
-         value credited to the first valid recipient. This is important to keep
-         the debited and credited amounts consistent.
+       - `creditGasFees` must credit all specified amounts. If this is not
+         possible the functions must revert to prevent inconsistencies between
+         the debited and credited amounts.
 
        Notes on compatibility:
        - There are two versions of `creditGasFees`: one for the current
