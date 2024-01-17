@@ -32,27 +32,27 @@ import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
  * versions should be implemented to increase compatibility.
  */
 interface IFeeCurrency is IERC20 {
-    /// @notice Called before transaction execution to reserve the maximum amount of gas
-    /// that can be used by the transaction.
-    /// - The implementation must deduct `value` from `from`'s balance.
-    /// - Must revert if `msg.sender` is not the zero address.
+    // @notice Called before transaction execution to reserve the maximum amount of gas
+    // that can be used by the transaction.
+    // - The implementation must deduct `value` from `from`'s balance.
+    // - Must revert if `msg.sender` is not the zero address.
     function debitGasFees(address from, uint256 value) external;
 
-    /// @notice New function signature, will be used when all fee currencies have migrated.
-    /// Credited amounts include gas refund, base fee and tip. Future additions
-    /// may include L1 gas fee when Celo becomes and L2.
-    /// - The implementation must increase each `recipient`'s balance by corresponding `amount`.
-    /// - Must revert if `msg.sender` is not the zero address.
-    /// - Must revert if `recipients` and `amounts` have different lengths.
+    // @notice New function signature, will be used when all fee currencies have migrated.
+    // Credited amounts include gas refund, base fee and tip. Future additions
+    // may include L1 gas fee when Celo becomes and L2.
+    // - The implementation must increase each `recipient`'s balance by corresponding `amount`.
+    // - Must revert if `msg.sender` is not the zero address.
+    // - Must revert if `recipients` and `amounts` have different lengths.
     function creditGasFees(address[] calldata recipients, uint256[] calldata amounts) external;
 
-    /// @notice Old function signature for backwards compatibility
-    /// - Must revert if `msg.sender` is not the zero address.
-    /// - `refund` must be credited to `from`
-    /// - `tipTxFee` must be credited to `feeRecipient`
-    /// - `baseTxFee` must be credited to `communityFund`
-    /// - `gatewayFeeRecipient` and `gatewayFee` only exist for backwards
-    ///   compatibility reasons and will always be zero.
+    // @notice Old function signature for backwards compatibility
+    // - Must revert if `msg.sender` is not the zero address.
+    // - `refund` must be credited to `from`
+    // - `tipTxFee` must be credited to `feeRecipient`
+    // - `baseTxFee` must be credited to `communityFund`
+    // - `gatewayFeeRecipient` and `gatewayFee` only exist for backwards
+    //   compatibility reasons and will always be zero.
     function creditGasFees(
         address refundRecipient,
         address tipRecipient,
