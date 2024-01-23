@@ -30,10 +30,6 @@ import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
  * that omits deprecated fields and accommodates potential new recipients
  * that might become necessary on later blockchain implementations. Both
  * versions should be implemented to increase compatibility.
- * - Future Celo blockchain implementations might provide a way for plain
- * ERC-20 tokens to be used as gas currencies without implementing this
- * interface. If this alternative is preferable for you, please contact cLabs
- * before implementing this interface for your token.
  */
 interface IFeeCurrency is IERC20 {
     /// @notice Called before transaction execution to reserve the maximum amount of gas
@@ -52,19 +48,19 @@ interface IFeeCurrency is IERC20 {
 
     /// @notice Old function signature for backwards compatibility
     /// - Must revert if `msg.sender` is not the zero address.
-    /// - `refund` must be credited to `from`
-    /// - `tipTxFee` must be credited to `feeRecipient`
-    /// - `baseTxFee` must be credited to `communityFund`
-    /// - `gatewayFeeRecipient` and `gatewayFee` only exist for backwards
+    /// - `refundAmount` must be credited to `refundRecipient`
+    /// - `tipAmount` must be credited to `tipRecipient`
+    /// - `baseFeeAmount` must be credited to `baseFeeRecipient`
+    /// - `_gatewayFeeRecipient` and `_gatewayFeeAmount` only exist for backwards
     ///   compatibility reasons and will always be zero.
     function creditGasFees(
-        address from,
-        address feeRecipient,
-        address gatewayFeeRecipient,
-        address communityFund,
-        uint256 refund,
-        uint256 tipTxFee,
-        uint256 gatewayFee,
-        uint256 baseTxFee
+        address refundRecipient,
+        address tipRecipient,
+        address _gatewayFeeRecipient,
+        address baseFeeRecipient,
+        uint256 refundAmount,
+        uint256 tipAmount,
+        uint256 _gatewayFeeAmount,
+        uint256 baseFeeAmount
     ) external;
 }
