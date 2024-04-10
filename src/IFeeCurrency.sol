@@ -44,6 +44,7 @@ interface IFeeCurrency is IERC20 {
     /// - The implementation must increase each `recipient`'s balance by corresponding `amount`.
     /// - Must revert if `msg.sender` is not the zero address.
     /// - Must revert if `recipients` and `amounts` have different lengths.
+    /// - The blockchain client will never call this function with zero-address recipients or zero amounts.
     function creditGasFees(address[] calldata recipients, uint256[] calldata amounts) external;
 
     /// @notice Old function signature for backwards compatibility
@@ -53,6 +54,10 @@ interface IFeeCurrency is IERC20 {
     /// - `baseFeeAmount` must be credited to `baseFeeRecipient`
     /// - `_gatewayFeeRecipient` and `_gatewayFeeAmount` only exist for backwards
     ///   compatibility reasons and will always be zero.
+    /// - The blockchain client will never call this function with zero-address
+    ///   recipients, except for the legacy `_gatewayFeeRecipient`. The contract
+    ///   should revert when any other recipient is zero.
+    /// - The contract must accept zero amounts without reverting.
     function creditGasFees(
         address refundRecipient,
         address tipRecipient,
